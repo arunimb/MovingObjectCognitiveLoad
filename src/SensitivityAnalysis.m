@@ -8,7 +8,7 @@ combinationNo = 10; % Most robust weighting combination, 1 through 13
 EEG_threshold = [900 1000 1100];
 
 
-datadir = '../../../data/OriginalData';
+datadir = '../../../data/TrimData';
 
 
 electrodeNames = ["AF3" "F7" "F3" "FC5" "T7" "P7" "O1" "O2" "P8" "T8" "FC6" "F4" "F8" "AF4"]; % electrodes on Emotiv Epoc

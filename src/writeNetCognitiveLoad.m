@@ -1,6 +1,6 @@
 clear variables
 
-datadir = '../../../data/OriginalData/';
+datadir = '../../../data/TrimData/';
 outputDir  = '';
 subjects=dir([datadir, filesep, 'Subject*']);
 

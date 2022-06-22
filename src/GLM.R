@@ -22,7 +22,8 @@ library(interactions)
 #read glm file
 delim = ","
 dec = "."
-testResults = read.csv('outputTables/outputForGLMM.csv', header=TRUE, sep=delim, dec=dec, stringsAsFactors=FALSE)
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+testResults = read.csv('../data/outputTables/outputForGLMM.csv', header=TRUE, sep=delim, dec=dec, stringsAsFactors=FALSE)
 
 # Set predictors as categorical variables
 testResults$Speed <- as.factor(testResults$Speed)
@@ -70,3 +71,4 @@ anova(mod4,mod10, test = "Chisq")
 
   #AICc
 aictab(cand.set = models, modnames = c('mod0','mod1','mod2','mod3','mod4','mod5','mod6','mod7','mod8','mod9','mod10'))
+
