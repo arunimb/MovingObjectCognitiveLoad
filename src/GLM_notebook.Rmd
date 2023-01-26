@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -106,7 +108,18 @@ summary(mod6)
 
 Plot the model
 ```{r}
+```
+
+
+```{r}
 plot1 = cat_plot(mod6, pred = Turbidity, modx = FishSpeed, mod2 = CameraDistance, geom = "line",data = testResults,interval=FALSE)
+plot1 + theme(text = element_text(size = 18),axis.text = element_text(size = 16))+
+  ylab("Cognitive Load")
+```
+
+
+```{r}
+plot1 = cat_plot(mod6, pred = Turbidity, modx = FishSpeed, mod2 = NumberFish, geom = "line",data = testResults,interval=FALSE, fig.width=20, fig.height=2)
 plot1 + theme(text = element_text(size = 18),axis.text = element_text(size = 18))+
   ylab("Cognitive Load")
 ```

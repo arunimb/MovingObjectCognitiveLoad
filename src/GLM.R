@@ -22,8 +22,7 @@ library(interactions)
 #read glm file
 delim = ","
 dec = "."
-setwd(dirname(rstudioapi::getSourceEditorContext()$path))
-testResults = read.csv('../data/outputTables/outputForGLMM.csv', header=TRUE, sep=delim, dec=dec, stringsAsFactors=FALSE)
+testResults = read.csv("C:/Users/aruni/OneDrive - Northern Illinois University/PhDProjects/CognitiveCorrelatesExperiment/Scripts/FinalScriptCogntiveCorrelatesExperiment/FinalScriptCogntiveCorrelatesExperiment/src/outputTables/outputForGLMM.csv", header=TRUE, sep=delim, dec=dec, stringsAsFactors=FALSE)
 
 # Set predictors as categorical variables
 testResults$Speed <- as.factor(testResults$Speed)
@@ -71,4 +70,18 @@ anova(mod4,mod10, test = "Chisq")
 
   #AICc
 aictab(cand.set = models, modnames = c('mod0','mod1','mod2','mod3','mod4','mod5','mod6','mod7','mod8','mod9','mod10'))
+
+
+#
+jpeg(file="C:\Users\aruni\OneDrive - Northern Illinois University\PhDProjects\CognitiveCorrelatesExperiment\Scripts\FinalScriptCogntiveCorrelatesExperiment\FinalScriptCogntiveCorrelatesExperiment\src\Figure6_av.jpg", width = 36, height = 30, units = "cm", res = 400)
+plot1 = cat_plot(mod6, pred = Turbidity, modx = FishSpeed, mod2 = NumberFish, geom = "line",data = testResults,interval=FALSE)
+plot1+ylab("Cognitive Load") + theme(text = element_text(size = 35))+ theme(axis.title = element_text(size = 30))+coord_fixed(ratio=5)+theme(axis.text.x = element_text(size = 38))+theme(axis.text.y = element_text(size = 38))+ theme(legend.text = element_text(size=36.5))+ theme(legend.title = element_text(size=36.5))+ theme( panel.grid.major = element_line(size = 1.5))
+while (!is.null(dev.list()))  dev.off()
+
+#
+jpeg("Figure6_b.jpg", width = 25, height = 30, units = "cm", res = 400)
+plot2 = cat_plot(mod6, pred = Turbidity, modx = FishSpeed, mod2 = CameraDistance, geom = "line",data = testResults,interval=FALSE)
+plot2+ylab("Cognitive Load")+theme(text = element_text(size = 30)) + theme(legend.text = element_text(size=35))+ theme(legend.title = element_text(size=35),panel.grid.major = element_line(size = 1.5))
+plot2 + theme(axis.title = element_text(size = 30))+coord_fixed(ratio=5.5)+theme(axis.text.x = element_text(size = 38))+theme(axis.text.y = element_text(size = 43),panel.grid.major = element_line(size = 1.5))
+while (!is.null(dev.list()))  dev.off()
 

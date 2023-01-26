@@ -1,7 +1,7 @@
 clear variables
 
-datadir = '../../../data/TrimData'; % Raw data 
-outputDir  = '../data/outputTables/';
+datadir = '../../../data/';
+outputDir  = 'outputTables/';
 
 cogLoadType = {'alphaDiff'};
 baseLineType = {'immediate'}; %'first' or 'immediate' %cogLoad varying w/ trial 1 baseline, cogLoad w/ every trial baseline
@@ -10,12 +10,12 @@ threshold = 1000; % Define max eeg amplitude
 combinationNo = 10; % Set what combination to use 1 through 13
 
 subjects=dir([datadir, filesep, 'Subject*']);
-agedata=xlsread([datadir, filesep, 'ageAndGender.xlsx']);
+% K:\PhDProjects\CognitiveCorrelatesExperiment\Scripts\playbox
+% K:\PhDProjects\CognitiveCorrelatesExperiment\data\OriginalData
+%agedata=xlsread([datadir, filesep, 'ageAndGender.xlsx']);
 
-% Define Electrode names
 electrodeNames = ["AF3" "F7" "F3" "FC5" "T7" "P7" "O1" "O2" "P8" "T8" "FC6" "F4" "F8" "AF4"];
 
-% Store electrode locations
 AF3 = findLoc(electrodeNames(1));
 F7 = findLoc(electrodeNames(2));
 F3 = findLoc(electrodeNames(3));
@@ -30,21 +30,15 @@ FC6 = findLoc(electrodeNames(11));
 F4 = findLoc(electrodeNames(12));
 F8 = findLoc(electrodeNames(13));
 AF4= findLoc(electrodeNames(14));
-electrodePostions = [AF3 ;F7 ;F3 ;FC5; FC6 ;F4 ;F8 ;AF4]; % store frontal electrode positions
+electrodePostions = [AF3 ;F7 ;F3 ;FC5; FC6 ;F4 ;F8 ;AF4];
 
-% declare empty array for gaussian centroid position
-x = []; 
+x = [];
 y = [];
-
-
-sig = [0.1, 0.5, 1]; % standard deviation 
+sig = [0.1, 0.5, 1];
 MeanL = [AF3 ;F7; F3; FC5; [-100 -100]]; % Left hemishpere centroids, -100,-100 are there for uniform weighting
 MeanR = [AF4 ;F8; F4; FC6; [-100 -100]]; % Right hemisphere centroids
 comb = [];
 counter = 1;
-
-% create all combinations of gaussian centroid position and standard
-% deviation
 for meanLoc = 1:5 % iterate weight location 1-AF3 AF4, 2- F7 F8, 3-F3 F4, 4- FC5 FC6, 5- uniform
     for stndd = 1:3 % iterate stan
         comb(counter,:) = [sig(stndd) , MeanL(meanLoc,:), MeanR(meanLoc,:)];
@@ -78,6 +72,7 @@ for type = 1:1
             XL = [X1L(:) X2L(:)];
             p = mvnpdf(XL,mu,Sigma);
             p = p/sum(p);
+            %p = 1/8*ones(size(p));
             ZL = reshape(p,2,2);
 
 
@@ -86,8 +81,11 @@ for type = 1:1
             XR = [X1R(:) X2R(:)];
             p = mvnpdf(XR,mu,Sigma);
             p = p/sum(p);
-
+            %p = 1/8*ones(size(p));
             ZR = reshape(p,2,2);
+
+            % folder = 'G:\NIU_PhD_courses\ArunimResearch\PapersWithSB\Experiment1\EditsbySB\Data\CogntiveLoadOutput\';
+
 
             weightsL = interp2(X1L,X2L,ZL,electrodePostions(1:4,1),electrodePostions(1:4,2));
             weightsR = interp2(X1R,X2R,ZR,electrodePostions(5:8,1),electrodePostions(5:8,2));
@@ -103,7 +101,7 @@ for type = 1:1
                 dt=1/userPrimary.SampleRate;        % sampling rate
                 clw = [];
                 reaction_time=[];
-                subject_age=agedata(agedata(:,1)==str2double(subjects(ss).name(8:end)),2);
+                %subject_age=agedata(agedata(:,1)==str2double(subjects(ss).name(8:end)),2);
                 subject_parameters = [];
                 c = 1; % to remove skip trials greater that maxeeg
 
@@ -111,12 +109,14 @@ for type = 1:1
                 for trialno=1:24
                     frontal_data=userPrimary.primaryTask(trialno).data(:,[1:4, 11:14]);
                     maxeeg=max(abs(frontal_data(:)));
-
+                    %maxeeg=max(abs(userPrimary.primaryTask(trialno).data(:)));
                     reaction_time=size(userPrimary.primaryTask(trialno).data',2)*dt;
                     if maxeeg<threshold                  % don't want to process a trial that has very high eeg
-
+                        %reaction_time=size(userPrimary.primaryTask(trialno).data',2)*dt;
                         subject_parameters= [userPrimary.parameters(trialno).data(1) userPrimary.parameters(trialno).data(2) userPrimary.parameters(trialno).data(3) userPrimary.parameters(trialno).data(4) userPrimary.parameters(trialno).data(5)];
-
+                        %                         [~,~,~,~,~,clw]=cogload(userPrimary.baselineTask(trialno).data', ...
+                        %                             userPrimary.primaryTask(trialno).data',...
+                        %                             dt, wts,cogLoadType(type));
                         if (baseLineType == "immediate")
                             [~,~,~,~,~,clw]=cogload(userPrimary.baselineTask(trialno).data', ...
                                 userPrimary.primaryTask(trialno).data',...
@@ -130,7 +130,7 @@ for type = 1:1
                         end
                         accumulatorMatrix = vertcat(accumulatorMatrix,[ss,trialno,meanLoc,sig(stndd),reaction_time,st_acc(trialno,1),clw,subject_parameters]);
                         acceptedTrials = [acceptedTrials,trialno];
-
+                        %cumulativeIndex
                     end
                     c = c + 1;
                 end

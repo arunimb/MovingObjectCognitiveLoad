@@ -1,6 +1,6 @@
 clear variables
 
-datadir = '../../../data/TrimData/';
+datadir = '..\src\data\TrimData\';
 outputDir  = '';
 subjects=dir([datadir, filesep, 'Subject*']);
 
@@ -79,7 +79,7 @@ for bType = 1:2 %iterate baseline type
                     fprintf('processing %s ...\n',subjects(ss).name);
 
                     load([datadir, subjects(ss).name, filesep, 'userPrimary_manual_0p1_20.mat']);
-                    st_acc=csvread([datadir, filesep, 'SecondaryTaskAccuracy', filesep, ...
+                    st_acc=csvread([datadir, filesep, filesep, ...
                         subjects(ss).name, filesep, 'userSecondary.csv']); % secondary task accuracy
                     dt=1/userPrimary.SampleRate;        % sampling rate
                     clw = [];
@@ -132,12 +132,12 @@ for bType = 1:2 %iterate baseline type
             if string(cogLoadType(type))=="alphathetadiff"
                 outputTable = array2table(finalMatrix,...
                     'VariableNames',{'Subject','Trial','Gaussian_Centroid','Standard_Deviation','Reaction_Time','Secondary_Task_Acc','Net_Cognitive_Load','Speed','Number_of_Fish','Turbidity','CameraDistance','Fish_Type'});
-                writetable(outputTable,['../data/outputTables/outputForGLMM_alphathetadiff_baselineImmediate.csv'],'Delimiter',',');
+                writetable(outputTable,['outputTables/outputForGLMM_alphathetadiff_baselineImmediate.csv'],'Delimiter',',');
             end
             if string(cogLoadType(type))=="alphaDiff"
                 outputTable = array2table(finalMatrix,...
                     'VariableNames',{'Subject','Trial','Gaussian_Centroid','Standard_Deviation','Reaction_Time','Secondary_Task_Acc','Net_Cognitive_Load','Speed','Number_of_Fish','Turbidity','CameraDistance','Fish_Type'});
-                writetable(outputTable,['../data/outputTables/outputForGLMM_alphaDiff_baselineImmediate.csv'],'Delimiter',',');
+                writetable(outputTable,['outputTables/outputForGLMM_alphaDiff_baselineImmediate.csv'],'Delimiter',',');
             end
         end
 
@@ -146,12 +146,12 @@ for bType = 1:2 %iterate baseline type
             if string(cogLoadType(type))=="alphathetadiff"
                 outputTable = array2table(finalMatrix,...
                     'VariableNames',{'Subject','Trial','Gaussian_Centroid','Standard_Deviation','Reaction_Time','Secondary_Task_Acc','Net_Cognitive_Load','Speed','Number_of_Fish','Turbidity','CameraDistance','Fish_Type'});
-                writetable(outputTable,['../data/outputTables/outputForGLMM_alphathetadiff_baseline1.csv'],'Delimiter',',');
+                writetable(outputTable,['outputTables/outputForGLMM_alphathetadiff_baseline1.csv'],'Delimiter',',');
             end
             if string(cogLoadType(type))=="alphaDiff"
                 outputTable = array2table(finalMatrix,...
                     'VariableNames',{'Subject','Trial','Gaussian_Centroid','Standard_Deviation','Reaction_Time','Secondary_Task_Acc','Net_Cognitive_Load','Speed','Number_of_Fish','Turbidity','CameraDistance','Fish_Type'});
-                writetable(outputTable,['../data/outputTables/outputForGLMM_alphaDiff_baseline1.csv'],'Delimiter',',');
+                writetable(outputTable,['outputTables/outputForGLMM_alphaDiff_baseline1.csv'],'Delimiter',',');
             end
         end
 
@@ -161,7 +161,7 @@ for bType = 1:2 %iterate baseline type
 end
 
 totalCombinations = numel(sig)*size(MeanL,1); % Total number of combinations
-data = readmatrix("../data/outputTables/outputForGLMM_alphathetadiff_baselineImmediate.csv");
+data = readmatrix("outputTables/outputForGLMM_alphathetadiff_baselineImmediate.csv");
 strideLength = size(data,1)/totalCombinations; % Number of rows to skip
 rowStart = 1;
 
@@ -185,7 +185,7 @@ for i = 1:totalCombinations
     rowStart = rowStart + strideLength;
 end
 
-data = readmatrix("../data/outputTables/outputForGLMM_alphadiff_baselineImmediate.csv");
+data = readmatrix("outputTables/outputForGLMM_alphadiff_baselineImmediate.csv");
 rowStart = 1;
 statisticsContainer1_2 = [];
 for i = 1:totalCombinations
@@ -211,10 +211,10 @@ statisticsContainer1 = horzcat(statisticsContainer1_1,statisticsContainer1_2); %
 Table_ImmediateBaseline = array2table(statisticsContainer1,'VariableNames',{'Gaussian Location', 'standard deviation', 'Secondary Task Accuracy estimate atd', 'Secondary Task Accuracy R^2 atd', ...
     'Secondary Task Accuracy P value atd', 'Primary Task estimate atd', 'Primary Task R^2 atd', 'Primary Task P value atd' , 'Secondary Task Accuracy estimate ad', ...
     'Secondary Task Accuracy R^2 ad','Secondary Task Accuracy P value ad', 'Primary Task estimate ad', 'Primary Task R^2 ad', 'Primary Task P value ad'});
-writetable(Table_ImmediateBaseline,['../data/outputTables/Table_ImmediateBaseline.csv'],'Delimiter',',');
+writetable(Table_ImmediateBaseline,['outputTables/Table_ImmediateBaseline.csv'],'Delimiter',',');
 %% 1st baseline calculations
 
-data = readmatrix("../data/outputTables/outputForGLMM_alphathetadiff_baseline1.csv");
+data = readmatrix("outputTables/outputForGLMM_alphathetadiff_baseline1.csv");
 rowStart = 1;
 statisticsContainer2_1 = [];
 for i = 1:totalCombinations
@@ -234,7 +234,7 @@ for i = 1:totalCombinations
     rowStart = rowStart + strideLength;
 end
 
-data = readmatrix("../data/outputTables/outputForGLMM_alphadiff_baseline1.csv");
+data = readmatrix("outputTables/outputForGLMM_alphadiff_baseline1.csv");
 rowStart = 1;
 statisticsContainer2_2 = [];
 for i = 1:totalCombinations
@@ -260,7 +260,7 @@ Table_Baseline1 = array2table(statisticsContainer2,'VariableNames',{'Gaussian Lo
     'Secondary Task Accuracy P value atd', 'Primary Task estimate atd', 'Primary Task R^2 atd', 'Primary Task P value atd' , 'Secondary Task Accuracy estimate ad', ...
     'Secondary Task Accuracy R^2 ad','Secondary Task Accuracy P value ad', 'Primary Task estimate ad', 'Primary Task R^2 ad', 'Primary Task P value ad'});
 
-writetable(Table_Baseline1,['../data/outputTables/Table_Baseline1.csv'],'Delimiter',',');
+writetable(Table_Baseline1,['outputTables/Table_Baseline1.csv'],'Delimiter',',');
 
 
 

@@ -8,7 +8,7 @@ combinationNo = 10; % Most robust weighting combination, 1 through 13
 EEG_threshold = [900 1000 1100];
 
 
-datadir = '../../../data/TrimData';
+datadir = '../../../data/';
 
 
 electrodeNames = ["AF3" "F7" "F3" "FC5" "T7" "P7" "O1" "O2" "P8" "T8" "FC6" "F4" "F8" "AF4"]; % electrodes on Emotiv Epoc
@@ -81,7 +81,6 @@ subjects=dir([datadir, filesep, 'Subject*']);
 agedata=xlsread([datadir, filesep, 'ageAndGender.xlsx']);
 ntr=24;                                 % trials per subject
 
-%Declare empty array
 cldata=[];
 RsquaredSecondaryTask = [];
 pvalueSecondaryTask = [];
@@ -90,7 +89,6 @@ estimateSecondaryTask = [];
 RsquaredPrimaryTask = [];
 pvaluePrimaryTask = [];
 estimatePrimarytask = [];
-
 for threshold = 1:3
 
     for ss=1:size(subjects,1)  % iterate over subjects
@@ -152,13 +150,13 @@ for threshold = 1:3
     d2=dataset(secondaryAccuracy, cognitiveLoad);
     mdl2=fitlm(d2, 'cognitiveLoad~secondaryAccuracy'); % secondary Task regression
 
-    RsquaredSecondaryTask(threshold) = mdl2.Rsquared.Ordinary; % get Rsquared value
-    pvalueSecondaryTask(threshold) = mdl2.Coefficients.pValue(2); % get p value
-    estimateSecondaryTask(threshold) = mdl2.Coefficients.Estimate(2); % get coefficent
+    RsquaredSecondaryTask(threshold) = mdl2.Rsquared.Ordinary;
+    pvalueSecondaryTask(threshold) = mdl2.Coefficients.pValue(2);
+    estimateSecondaryTask(threshold) = mdl2.Coefficients.Estimate(2);
 
-    RsquaredPrimaryTask(threshold) = mdl1.Rsquared.Ordinary;% get Rsquared value
-    pvaluePrimaryTask(threshold) = mdl1.Coefficients.pValue(2); % get p value
-    estimatePrimaryTask(threshold) = mdl1.Coefficients.Estimate(2);% get coefficent
+    RsquaredPrimaryTask(threshold) = mdl1.Rsquared.Ordinary;
+    pvaluePrimaryTask(threshold) = mdl1.Coefficients.pValue(2);
+    estimatePrimaryTask(threshold) = mdl1.Coefficients.Estimate(2);
     
     cldata = [];
 
