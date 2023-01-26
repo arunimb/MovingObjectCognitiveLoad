@@ -1,6 +1,6 @@
 clear variables
 
-datadir = '../../../data/';
+datadir = '..\data\TrimData\';
 outputDir  = 'outputTables/';
 
 cogLoadType = {'alphaDiff'};

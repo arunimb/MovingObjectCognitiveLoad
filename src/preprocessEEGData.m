@@ -205,23 +205,23 @@ for uu = 1:numel(userIDs) %%Iterate over all Users
         userSecondary1.parameters(ii).data = orderedSecondaryTask(ii,5:end);
         userSecondary(ii,:) = [userSecondary1.accuracy(ii).data, userSecondary1.parameters(ii).data];
     end
-% %     userPrimary.SampleRate = sampleRate(uu);
-% %     temp = cell2mat(userIDs(uu));
-% %     folder = sprintf('data/TrimData/Subject%s/',temp);
-% %     mkdir(folder)
-% %     filename = sprintf('data/TrimData/Subject%s/userSecondary.csv',temp);
-% %     %fclose(fopen(filename, 'w'));
-% %     fid = fopen(fullfile(folder, 'userSecondary.csv'), 'w');
-% %     fclose(fid);
-% %     writematrix(userSecondary,fullfile(folder, 'userSecondary.csv'));
-% %     mkdir([postpath 'Subject' char(userIDs(uu)) '/'])
-% %     filename = [postpath 'Subject' char(userIDs(uu)) '/userPrimary_manual_0p1_20.mat'];
-% %     save(filename,'userPrimary')
-% % 
-% %     %filename = sprintf('data/TrimData/Subject%s/userSecondary_manual_0p1_20.mat',userIDs(uu));
-% %     filename = [postpath 'Subject' char(userIDs(uu)) '/userSecondary_manual_0p1_20.mat'];
-% %     userSecondary = userSecondary1; %changing variable name
-% %     save(filename,'userSecondary')
+    userPrimary.SampleRate = sampleRate(uu);
+    temp = cell2mat(userIDs(uu));
+    folder = sprintf('data/TrimData/Subject%s/',temp);
+    mkdir(folder)
+    filename = sprintf('data/TrimData/Subject%s/userSecondary.csv',temp);
+    %fclose(fopen(filename, 'w'));
+    fid = fopen(fullfile(folder, 'userSecondary.csv'), 'w');
+    fclose(fid);
+    writematrix(userSecondary,fullfile(folder, 'userSecondary.csv'));
+    mkdir([postpath 'Subject' char(userIDs(uu)) '/'])
+    filename = [postpath 'Subject' char(userIDs(uu)) '/userPrimary_manual_0p1_20.mat'];
+    save(filename,'userPrimary')
+
+    %filename = sprintf('data/TrimData/Subject%s/userSecondary_manual_0p1_20.mat',userIDs(uu));
+    filename = [postpath 'Subject' char(userIDs(uu)) '/userSecondary_manual_0p1_20.mat'];
+    userSecondary = userSecondary1; %changing variable name
+    save(filename,'userSecondary')
 
 
 end
