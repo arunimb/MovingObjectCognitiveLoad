@@ -207,9 +207,9 @@ for uu = 1:numel(userIDs) %%Iterate over all Users
     end
     userPrimary.SampleRate = sampleRate(uu);
     temp = cell2mat(userIDs(uu));
-    folder = sprintf('data/TrimData/Subject%s/',temp);
+    folder = sprintf('../data/TrimData/Subject%s/',temp);
     mkdir(folder)
-    filename = sprintf('data/TrimData/Subject%s/userSecondary.csv',temp);
+    filename = sprintf('../data/TrimData/Subject%s/userSecondary.csv',temp);
     %fclose(fopen(filename, 'w'));
     fid = fopen(fullfile(folder, 'userSecondary.csv'), 'w');
     fclose(fid);

@@ -1,7 +1,7 @@
 clear variables
 
 datadir = '..\data\TrimData\';
-outputDir  = '';
+outputDir  = '..\outputTables';
 subjects=dir([datadir, filesep, 'Subject*']);
 
 %% Define electrode names
@@ -234,7 +234,7 @@ for i = 1:totalCombinations
     rowStart = rowStart + strideLength;
 end
 
-data = readmatrix("outputTables/outputForGLMM_alphadiff_baseline1.csv");
+data = readmatrix("../outputTables/outputForGLMM_alphadiff_baseline1.csv");
 rowStart = 1;
 statisticsContainer2_2 = [];
 for i = 1:totalCombinations
@@ -260,7 +260,7 @@ Table_Baseline1 = array2table(statisticsContainer2,'VariableNames',{'Gaussian Lo
     'Secondary Task Accuracy P value atd', 'Primary Task estimate atd', 'Primary Task R^2 atd', 'Primary Task P value atd' , 'Secondary Task Accuracy estimate ad', ...
     'Secondary Task Accuracy R^2 ad','Secondary Task Accuracy P value ad', 'Primary Task estimate ad', 'Primary Task R^2 ad', 'Primary Task P value ad'});
 
-writetable(Table_Baseline1,['outputTables/Table_Baseline1.csv'],'Delimiter',',');
+writetable(Table_Baseline1,['../outputTables/Table_Baseline1.csv'],'Delimiter',',');
 
 
 

@@ -1,7 +1,7 @@
 clear variables
 
 datadir = '..\data\TrimData\';
-outputDir  = 'outputTables/';
+outputDir  = '..\outputTables\';
 
 cogLoadType = {'alphaDiff'};
 baseLineType = {'immediate'}; %'first' or 'immediate' %cogLoad varying w/ trial 1 baseline, cogLoad w/ every trial baseline
