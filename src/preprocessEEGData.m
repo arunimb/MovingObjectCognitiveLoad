@@ -5,7 +5,8 @@ clc
 addpath('../../../../data/RawData/');
 
 fishSpecies = ['CommonCarp','EurasianRuffe','YellowPerch','RoundGoby'];
-userIDs = {'99235','11974','12606','12679','12939','15296','16341','16854','18999','19010','19469','36411','85560','88995','62973','53722','35717','96769','39437','37484','98618','32342'};
+userIDs = {'48977','67874','75775','74314','39223','65548','17119','70605','33184','27693', ...
+    '84618','69483','38156','76552','43875','23445','82346','79520','95023','31710','18688','19714'};
 
 sampleRate = horzcat(ones(1,13)*128,ones(1,9)*256);
 prePath = '../../../../data/RawData/';
@@ -204,23 +205,23 @@ for uu = 1:numel(userIDs) %%Iterate over all Users
         userSecondary1.parameters(ii).data = orderedSecondaryTask(ii,5:end);
         userSecondary(ii,:) = [userSecondary1.accuracy(ii).data, userSecondary1.parameters(ii).data];
     end
-    userPrimary.SampleRate = sampleRate(uu);
-    temp = cell2mat(userIDs(uu));
-    folder = sprintf('data/TrimData/Subject%s/',temp);
-    mkdir(folder)
-    filename = sprintf('data/TrimData/Subject%s/userSecondary.csv',temp);
-    %fclose(fopen(filename, 'w'));
-    fid = fopen(fullfile(folder, 'userSecondary.csv'), 'w');
-    fclose(fid);
-    writematrix(userSecondary,fullfile(folder, 'userSecondary.csv'));
-    mkdir([postpath 'Subject' char(userIDs(uu)) '/'])
-    filename = [postpath 'Subject' char(userIDs(uu)) '/userPrimary_manual_0p1_20.mat'];
-    save(filename,'userPrimary')
-
-    %filename = sprintf('data/TrimData/Subject%s/userSecondary_manual_0p1_20.mat',userIDs(uu));
-    filename = [postpath 'Subject' char(userIDs(uu)) '/userSecondary_manual_0p1_20.mat'];
-    userSecondary = userSecondary1; %changing variable name
-    save(filename,'userSecondary')
+% %     userPrimary.SampleRate = sampleRate(uu);
+% %     temp = cell2mat(userIDs(uu));
+% %     folder = sprintf('data/TrimData/Subject%s/',temp);
+% %     mkdir(folder)
+% %     filename = sprintf('data/TrimData/Subject%s/userSecondary.csv',temp);
+% %     %fclose(fopen(filename, 'w'));
+% %     fid = fopen(fullfile(folder, 'userSecondary.csv'), 'w');
+% %     fclose(fid);
+% %     writematrix(userSecondary,fullfile(folder, 'userSecondary.csv'));
+% %     mkdir([postpath 'Subject' char(userIDs(uu)) '/'])
+% %     filename = [postpath 'Subject' char(userIDs(uu)) '/userPrimary_manual_0p1_20.mat'];
+% %     save(filename,'userPrimary')
+% % 
+% %     %filename = sprintf('data/TrimData/Subject%s/userSecondary_manual_0p1_20.mat',userIDs(uu));
+% %     filename = [postpath 'Subject' char(userIDs(uu)) '/userSecondary_manual_0p1_20.mat'];
+% %     userSecondary = userSecondary1; %changing variable name
+% %     save(filename,'userSecondary')
 
 
 end
